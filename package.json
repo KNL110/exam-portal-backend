@@ -1,0 +1,25 @@
+{
+  "name": "goatestingagency-backend",
+  "version": "1.0.0",
+  "description": "Examination portal",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [
+    "goatestingagency"
+  ],
+  "author": "Krunal Asari",
+  "license": "ISC",
+  "devDependencies": {
+    "dotenv": "^17.2.0",
+    "nodemon": "^3.1.10"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mongoose": "^8.16.3",
+    "mongoose-aggregate-paginate-v2": "^1.1.4"
+  }
+}

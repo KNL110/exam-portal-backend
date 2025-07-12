@@ -22,13 +22,19 @@ const questionSchema = new mongoose.Schema({
         validate: [
             {
                 validator: function (val) {
-                    return val.length >= 2; // min options
+                    if (this.questionType === "MCQ") {
+                        return val.length >= 2;
+                    } // min options
+                    return true;
                 },
                 message: 'There must be at least 2 options.'
             },
             {
                 validator: function (val) {
-                    return val.length <= 5; // max options
+                    if (this.questionType === "MCQ") {
+                        return val.length <= 5;
+                    } // max options
+                    return true;
                 },
                 message: 'There cannot be more than 5 options.'
             }

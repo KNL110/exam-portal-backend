@@ -33,12 +33,12 @@ const examSchema = new mongoose.Schema({
     questions: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: question,
+            ref: "question",
         }
     ],
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: professor,
+        ref: "professor",
         required: true
     }
 }, { timestamps: true });

@@ -13,7 +13,7 @@ const candidateSchema = new mongoose.Schema({
         unique: true,
         trim: true
     },
-    seatingNumber : {   //seating numbers generated 1 day before the exam
+    seatingNumber: {   //seating numbers generated 1 day before the exam
         type: String,
         unique: true,
         trim: true
@@ -38,5 +38,12 @@ const candidateSchema = new mongoose.Schema({
         default: ""
     }
 }, { timestamps: true });
+
+userSchema.pre("save", async function (next) {
+    if (!this.isModified("password")) return next();
+
+    this.password = bcrypt.hash(this.password, 10);
+    next();
+});
 
 export const Candidate = mongoose.model("candidates", candidateSchema);

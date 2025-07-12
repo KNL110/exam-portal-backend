@@ -1,10 +1,11 @@
 import express from "express";
 import cors from "cors";
+import { CROS_ORIGIN } from "./constants.js";
 
 const app = express();
 
 app.use(cors({
-    origin : process.env.CROS_ORIGIN,
+    origin : CROS_ORIGIN,
     credentials : true
 }));
 

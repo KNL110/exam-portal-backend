@@ -33,4 +33,4 @@ const responseSchema = mongoose.Schema({
     timetaken : Number,
 }, { timestamps: true });
 
-export const responseModel = mongoose.model("responses", responseSchema);
+export const Response = mongoose.model("responses", responseSchema);

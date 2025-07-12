@@ -1,7 +1,8 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
+import { Candidate } from "../models/student.js";
 import validator from "validator";
-import { candidateModel } from "../models/student.js";
+
 
 export const login = asyncHandler(async (req, res) => {
 
@@ -13,7 +14,7 @@ export const login = asyncHandler(async (req, res) => {
 
     const query = validator.isEmail(identifier) ? { "email": identifier } : { "rollNumber": identifier };
 
-    const candidate = await candidateModel.findOne(query);
+    const candidate = await Candidate.findOne(query);
 
     if (!candidate) {
         throw new ApiError(401, "Invalid username or Email Id");

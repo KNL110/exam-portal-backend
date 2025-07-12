@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from "bcrypt";
 
 const candidateSchema = new mongoose.Schema({
     name: {
@@ -38,4 +39,4 @@ const candidateSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-export const candidateModel = mongoose.model("candidates", candidateSchema);
+export const Candidate = mongoose.model("candidates", candidateSchema);

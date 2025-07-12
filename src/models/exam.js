@@ -46,5 +46,5 @@ const examSchema = new mongoose.Schema({
     endTime: Date
 }, { timestamps: true });
 
-export const examModel = mongoose.model("exams", examSchema);
+export const Exam = mongoose.model("exams", examSchema);
 

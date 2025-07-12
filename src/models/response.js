@@ -7,7 +7,7 @@ const responseSchema = mongoose.Schema({
     },
     studentID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "student"
+        ref: "candidate"
     },
     answers: [
         {

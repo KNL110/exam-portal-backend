@@ -20,7 +20,7 @@ import professorRouter from "./routes/professorRoutes.js";
 
 //setup routes
 app.use("/api/v1/candidate", candidateRouter);
-app.use("api/v1/professor", professorRouter);
+app.use("/api/v1/professor", professorRouter);
 
 app.use(globalError);
 export { app };

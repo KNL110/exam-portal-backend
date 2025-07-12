@@ -33,12 +33,12 @@ const examSchema = new mongoose.Schema({
     questions: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "question",
+            ref: "questions",
         }
     ],
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "professor",
+        ref: "professors",
         required: true
     },
     exmaDate: Date,
@@ -46,5 +46,5 @@ const examSchema = new mongoose.Schema({
     endTime: Date
 }, { timestamps: true });
 
-export const exam = mongoose.model("exams", examSchema);
+export const examModel = mongoose.model("exams", examSchema);
 

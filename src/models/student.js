@@ -38,4 +38,4 @@ const candidateSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-export const candidate = mongoose.model("candidates", candidateSchema);
+export const candidateModel = mongoose.model("candidates", candidateSchema);

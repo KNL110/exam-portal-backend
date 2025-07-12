@@ -33,5 +33,5 @@ const professorSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-export const professor = mongoose.model("professors", professorSchema);
+export const professorModel = mongoose.model("professors", professorSchema);
 

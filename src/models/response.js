@@ -7,13 +7,13 @@ const responseSchema = mongoose.Schema({
     },
     studentID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "candidate"
+        ref: "candidates"
     },
     answers: [
         {
             questionID: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'question'
+                ref: 'questions'
             },
             type: {
                 type: String,
@@ -33,4 +33,4 @@ const responseSchema = mongoose.Schema({
     timetaken : Number,
 }, { timestamps: true });
 
-export const response = mongoose.model("responses", responseSchema);
+export const responseModel = mongoose.model("responses", responseSchema);

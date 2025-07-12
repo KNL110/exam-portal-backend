@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { CROS_ORIGIN } from "./constants.js";
 import { globalError } from "./middlewares/globalerror.js";
+import router from "./routes/candidateRoute.js";
 
 const app = express();
 
@@ -15,7 +16,9 @@ app.use(express.urlencoded({extended:true, limit:"16kb"}));
 app.use(globalError);
 
 //import routers
+import candidateRouter from "./routes/candidateRoute.js";
 
-app.use("/api/v1");
+//setup routes
+app.use("/api/v1", candidateRouter);
 
 export {app};

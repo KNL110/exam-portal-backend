@@ -12,6 +12,11 @@ const studentSchema = new mongoose.Schema({
         unique: true,
         trim: true
     },
+    seatingNumber : {   //seating numbers generated 1 day before the exam
+        type: String,
+        unique: true,
+        trim: true
+    },
     email: {
         type: String,
         required: true,

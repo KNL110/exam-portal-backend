@@ -28,10 +28,9 @@ const responseSchema = mongoose.Schema({
         type : Number,
         required : true
     },
-    timetaken : {
-        type : Number,
-        required : true
-    }
+    startTime: Date,
+    endTime: Date,
+    timetaken : Number,
 }, { timestamps: true });
 
 export const response = mongoose.model("responses", responseSchema);

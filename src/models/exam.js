@@ -40,7 +40,10 @@ const examSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "professor",
         required: true
-    }
+    },
+    exmaDate: Date,
+    startTime: Date,
+    endTime: Date
 }, { timestamps: true });
 
 export const exam = mongoose.model("exams", examSchema);

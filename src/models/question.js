@@ -49,6 +49,6 @@ const questionSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-});
+}, { timestamps: true });
 
 export const question = mongoose.model("questions", questionSchema);

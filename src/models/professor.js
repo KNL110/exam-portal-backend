@@ -31,6 +31,7 @@ const professorSchema = new mongoose.Schema({
         type: String,
         default: ""
     }
-});
+}, { timestamps: true });
 
-export const professor = mongoose.model("professor", professorSchema);
+export const professor = mongoose.model("professors", professorSchema);
+

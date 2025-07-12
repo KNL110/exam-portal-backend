@@ -34,7 +34,6 @@ const examSchema = new mongoose.Schema({
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: question,
-            required: true
         }
     ],
     createdBy: {

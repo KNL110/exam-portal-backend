@@ -1,6 +1,13 @@
 import mongoose from 'mongoose';
 import bcrypt from "bcrypt";
 
+//a counter schema for per-year-month sequence tracking
+const counterSchema = new mongoose.Schema({
+    yearMonth: String,
+    seq: Number
+});
+const Counter = mongoose.model('Counter', counterSchema);
+
 const candidateSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -42,6 +49,28 @@ candidateSchema.pre("save", async function (next) {
     if (!this.isModified("password")) return next();
 
     this.password = await bcrypt.hash(this.password, 10);
+    next();
+});
+
+candidateSchema.pre('save', async function (next) {
+    if (this.rollNumber) return next();
+
+    const now = new Date();
+    const year = now.getFullYear().toString().slice(-2);
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+
+    const yearMonth = `${year}${month}`;
+
+    const counter = await Counter.findOneAndUpdate(
+        { yearMonth },
+        { $inc: { seq: 0 } },
+        { new: true, upsert: true }
+    );
+
+    const sequence = String(counter.seq).padStart(4, '0');
+
+    this.rollNumber = `${year}${month}${sequence}`; //maybe chances of error in syntax
+
     next();
 });
 

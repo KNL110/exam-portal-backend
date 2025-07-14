@@ -21,14 +21,13 @@ export const registerCandidate = asyncHandler(async (req, res) => {
         throw new ApiError(409, "Candidate already registered");
     }
 
-
     const candidate = await Candidate.create({
         "name": fullname,
         "email": email,
         "password": password
     });
 
-    const newCandidate = await Candidate.findById(Candidate._id).select("-password -refreshToken");
+    const newCandidate = await Candidate.findById(candidate._id).select("-password -refreshToken");
 
     if (!newCandidate) {
         throw new ApiError(500, "Something went wrong while registering the Candidate");
@@ -62,7 +61,7 @@ export const login = asyncHandler(async (req, res) => {
         throw new ApiError(401, "Invalid Password");
     }
 
-    return res.status(200).json({
-        message: "this is candidate login page, working fine"
-    });
+    return res.status(200).json(
+        new ApiResponse(200, {}, "this is candidate login page, working fine")
+    );
 });

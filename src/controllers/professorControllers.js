@@ -3,6 +3,41 @@ import { ApiError } from "../utils/ApiError.js";
 import { Professor } from "../models/professor.js";
 import validator from "validator";
 
+export const registerProfessor = asyncHandler(async (req, res) => {
+
+    const { fullname, email, profid, password } = req.body;
+
+    if ([fullname, email, profid, password].some((field) => field?.trim() === "")) {
+        throw new ApiError(400, "All fields are required");
+    }
+
+    if (!validator.isEmail(email)) {
+        throw new ApiError(400, "Invalid Email address!");
+    }
+
+    const prof_exist = await Professor.findOne({ "email": email });
+
+    if (prof_exist) {
+        throw new ApiError(409, "Candidate already registered");
+    }
+
+    const professor = await Professor.create({
+        "name": fullname,
+        "ProfessorID": profid,
+        "email": email,
+        "password": password
+    });
+
+    const newprofessor = await Professor.findById(professor._id).select("-password -refreshToken");
+
+    if (!newprofessor) {
+        throw new ApiError(500, "Something went wrong while registering the Professor");
+    }
+
+    return res.status(201).json(
+        new ApiResponse(200, newprofessor, "Professor registered Successfully")
+    )
+});
 
 export const login = asyncHandler(async (req, res) => {
 
@@ -15,21 +50,18 @@ export const login = asyncHandler(async (req, res) => {
     const query = validator.isEmail(identifier) ? { "email": identifier } : { "professorID": identifier };
 
     const professor = await Professor.findOne(query);
-    
+
     if (!professor) {
         throw new ApiError(401, "Invalid professor ID or Email Id");
     }
-    
+
     const pass = await professor.isPasswordCorrect(password);
-    
+
     if (!pass) {
         throw new ApiError(401, "Invalid Password");
     }
 
-
-
-
-    return res.status(200).json({
-        message: "this is professor login page, working fine"
-    });
+    return res.status(200).json(
+        new ApiResponse(200, {}, "this is professor login page, working fine")
+    );
 });

@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import { CROS_ORIGIN } from "./constants.js";
 import { globalError } from "./middlewares/globalerror.js";
-import router from "./routes/candidateRoutes.js";
 
 const app = express();
 

@@ -9,7 +9,6 @@ const candidateSchema = new mongoose.Schema({
     },
     rollNumber: {
         type: String,
-        required: true,
         unique: true,
         trim: true
     },

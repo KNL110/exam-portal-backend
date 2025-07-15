@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { Professor } from "../models/professor.js";
 import validator from "validator";
+import { ApiResponse } from "../utils/ApiResponse.js";
 
 export const registerProfessor = asyncHandler(async (req, res) => {
 
@@ -18,12 +19,12 @@ export const registerProfessor = asyncHandler(async (req, res) => {
     const prof_exist = await Professor.findOne({ "email": email });
 
     if (prof_exist) {
-        throw new ApiError(409, "Candidate already registered");
+        throw new ApiError(409, "Professor already registered");
     }
 
     const professor = await Professor.create({
         "name": fullname,
-        "ProfessorID": profid,
+        "professorID": profid,
         "email": email,
         "password": password
     });

@@ -1,5 +1,6 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js"
 import { Candidate } from "../models/student.js";
 import validator from "validator";
 
@@ -7,7 +8,7 @@ export const registerCandidate = asyncHandler(async (req, res) => {
 
     const { fullname, email, password } = req.body;
 
-    if ([fullname, email, password].some((field) => field?.trim() === "")) {
+    if ([fullname, email, password].some((field) => field ? "" : field.trim() === "")) {
         throw new ApiError(400, "All fields are required");
     }
 
@@ -34,7 +35,7 @@ export const registerCandidate = asyncHandler(async (req, res) => {
     }
 
     return res.status(201).json(
-        new ApiResponse(200, newCandidate, "Candidate registered Successfully")
+        new ApiResponse(201, newCandidate, "Candidate registered Successfully")
     )
 
 });
@@ -43,7 +44,7 @@ export const login = asyncHandler(async (req, res) => {
 
     const { identifier, password } = req.body;
 
-    if ([identifier, password].some((field) => field?.trim() === "")) {
+    if ([identifier, password].some((field) => field? "" : field.trim() === "")) {
         throw new ApiError(400, "ID/email and password required");
     }
 

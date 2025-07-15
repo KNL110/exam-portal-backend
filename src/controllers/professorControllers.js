@@ -7,7 +7,7 @@ export const registerProfessor = asyncHandler(async (req, res) => {
 
     const { fullname, email, profid, password } = req.body;
 
-    if ([fullname, email, profid, password].some((field) => field?.trim() === "")) {
+    if ([fullname, email, profid, password].some((field) => field? "" : field.trim() === "")) {
         throw new ApiError(400, "All fields are required");
     }
 
@@ -43,7 +43,7 @@ export const login = asyncHandler(async (req, res) => {
 
     const { identifier, password } = req.body;
 
-    if ([identifier, password].some((field) => field?.trim() === "")) {
+    if ([identifier, password].some((field) => field? "" : field.trim() === "")) {
         throw new ApiError(400, "ID/email and password required");
     }
 

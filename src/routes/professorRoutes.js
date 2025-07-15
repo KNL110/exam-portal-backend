@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { login } from "../controllers/professorControllers.js";
+import { login , registerProfessor} from "../controllers/professorControllers.js";
 
 const router = Router();
 
+router.route("/register").post(registerProfessor);
 //login
 router.route("/login").post(login);
 

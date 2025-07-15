@@ -36,8 +36,7 @@ const candidateSchema = new mongoose.Schema({
     },
     gender: {
         type: String,
-        enum: ['Male', 'Female', 'Other'],
-        required: true
+        enum: ['Male', 'Female', 'Other']
     },
     refreshtoken: {
         type: String,

@@ -80,7 +80,7 @@ export const login = asyncHandler(async (req, res) => {
 
     const { refreshToken, accessToken } = await generateTokens(candidate);
 
-    const loggedUser = await candidate.findById(candidate._id).select("-password -refreshtoken");
+    const loggedUser = await Candidate.findById(candidate._id).select("-password -refreshtoken");
 
     const options = {
         httpOnly: true,

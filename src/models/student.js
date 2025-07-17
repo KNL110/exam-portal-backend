@@ -83,6 +83,7 @@ candidateSchema.methods.generateAccessToken = function(){
     return jwt.sign(
         {
             _id: this._id,
+            role: "candidate"
         },
         ACCESS_TOKEN_SECRET,
         {

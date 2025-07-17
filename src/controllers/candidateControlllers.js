@@ -4,6 +4,22 @@ import { ApiResponse } from "../utils/ApiResponse.js"
 import { Candidate } from "../models/student.js";
 import validator from "validator";
 
+export const generateTokens = async (user) => {
+    try {
+        let refreshToken = await user.generateRefreshToken();
+        let accessToken = await user.generateAccessToken();
+
+        user.refreshtoken = refreshToken;
+        await user.save({ validateBeforeSave: false });
+
+        return { refreshToken, accessToken };
+    } catch (error) {
+        console.error("Token generation error:", error);
+
+        throw new ApiError(500, "Something went wrong while generating tokens");
+    }
+}
+
 export const registerCandidate = asyncHandler(async (req, res) => {
 
     const { fullname, email, password } = req.body;
@@ -44,7 +60,7 @@ export const login = asyncHandler(async (req, res) => {
 
     const { identifier, password } = req.body;
 
-    if ([identifier, password].some((field) => field? "" : field.trim() === "")) {
+    if ([identifier, password].some((field) => field ? "" : field.trim() === "")) {
         throw new ApiError(400, "ID/email and password required");
     }
 
@@ -62,7 +78,24 @@ export const login = asyncHandler(async (req, res) => {
         throw new ApiError(401, "Invalid Password");
     }
 
-    return res.status(200).json(
-        new ApiResponse(200, {}, "this is candidate login page, working fine")
-    );
+    const { refreshToken, accessToken } = await generateTokens(candidate);
+
+    const loggedUser = await User.findById(candidate._id).select("-password -refreshtoken");
+
+    const options = {
+        httpOnly: true,
+        secure: true
+    };
+
+    return res.status(200)
+        .cookie("accessToken", accessToken, options)
+        .cookie("refreshToken", refreshToken, options)
+        .json(
+            new ApiResponse(200,
+                {
+                    user: loggedUser, refreshToken, accessToken
+                },
+                "Login Successful"
+            )
+        );
 });

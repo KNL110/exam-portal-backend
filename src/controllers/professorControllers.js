@@ -73,12 +73,11 @@ export const login = asyncHandler(async (req, res) => {
     };
 
     return res.status(200)
-        .cookie("accessToken", accessToken, options)
         .cookie("refreshToken", refreshToken, options)
         .json(
             new ApiResponse(200,
                 {
-                    user: loggedUser, refreshToken, accessToken
+                    user: loggedUser, accessToken
                 },
                 "Login Successful"
             )
@@ -100,7 +99,6 @@ export const logoutprofessor = asyncHandler(async (req, res) => {
     };
 
     return res.status(200)
-        .clearCookie("accessToken", options)
         .clearCookie("refreshToken", options)
         .json(new ApiResponse(200, {}, "professor logged out"));
 });

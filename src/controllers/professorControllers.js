@@ -65,7 +65,7 @@ export const login = asyncHandler(async (req, res) => {
 
     const { refreshToken, accessToken } = await generateTokens(professor);
 
-    const loggedUser = await User.findById(professor._id).select("-password -refreshtoken");
+    const loggedUser = await professor.findById(professor._id).select("-password -refreshtoken");
 
     const options = {
         httpOnly: true,

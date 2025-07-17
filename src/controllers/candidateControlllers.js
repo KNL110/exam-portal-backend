@@ -80,7 +80,7 @@ export const login = asyncHandler(async (req, res) => {
 
     const { refreshToken, accessToken } = await generateTokens(candidate);
 
-    const loggedUser = await User.findById(candidate._id).select("-password -refreshtoken");
+    const loggedUser = await candidate.findById(candidate._id).select("-password -refreshtoken");
 
     const options = {
         httpOnly: true,
@@ -93,7 +93,7 @@ export const login = asyncHandler(async (req, res) => {
         .json(
             new ApiResponse(200,
                 {
-                    user: loggedUser, refreshToken, accessToken
+                    candidate: loggedUser, refreshToken, accessToken
                 },
                 "Login Successful"
             )

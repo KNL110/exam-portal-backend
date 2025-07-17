@@ -1,3 +1,5 @@
+import { REFRESH_TOKEN_EXPIRY, REFRESH_TOKEN_SECRET, ACCESS_TOKEN_EXPIRY, ACCESS_TOKEN_SECRET } from "../constants.js";
+import jwt from "jsonwebtoken";
 import mongoose from 'mongoose';
 import bcrypt from "bcrypt";
 
@@ -75,6 +77,31 @@ candidateSchema.pre('save', async function (next) {
 
 candidateSchema.methods.isPasswordCorrect = async function (password) {
     return await bcrypt.compare(password, this.password);
+}
+
+candidateSchema.methods.generateAccessToken = function(){
+    return jwt.sign(
+        {
+            _id: this._id,
+        },
+        ACCESS_TOKEN_SECRET,
+        {
+            expiresIn: ACCESS_TOKEN_EXPIRY
+        }
+    );
+}
+
+candidateSchema.methods.generateRefreshToken = function(){
+    return jwt.sign(
+        {
+            _id: this._id,
+            
+        },
+        REFRESH_TOKEN_SECRET,
+        {
+            expiresIn: REFRESH_TOKEN_EXPIRY
+        }
+    );
 }
 
 export const Candidate = mongoose.model("candidates", candidateSchema);

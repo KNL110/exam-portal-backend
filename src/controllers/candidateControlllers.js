@@ -100,7 +100,7 @@ export const login = asyncHandler(async (req, res) => {
         );
 });
 
-export const logout = asyncHandler(async (req, res) => {
+export const logoutcandidate = asyncHandler(async (req, res) => {
     await Candidate.findByIdAndUpdate(
         req.user._id,
         {

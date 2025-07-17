@@ -24,7 +24,8 @@ const candidateSchema = new mongoose.Schema({
     seatingNumber: {   //seating numbers generated 1 day before the exam
         type: String,
         unique: true,
-        trim: true
+        trim: true,
+        sparse:true
     },
     email: {
         type: String,
@@ -64,7 +65,7 @@ candidateSchema.pre('save', async function (next) {
 
     const counter = await Counter.findOneAndUpdate(
         { yearMonth },
-        { $inc: { seq: 0 } },
+        { $inc: { seq: 1 } },
         { new: true, upsert: true }
     );
 

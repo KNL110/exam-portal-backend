@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const responseSchema = mongoose.Schema({
     examID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "exam",
+        ref: "exams",
     },
     studentID: {
         type: mongoose.Schema.Types.ObjectId,

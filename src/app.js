@@ -3,7 +3,6 @@ import cors from "cors";
 import cookieParser from 'cookie-parser';
 import { CORS_ORIGIN } from "./constants.js";
 import { globalError } from "./middlewares/globalerror.js";
-import { verifyJWT } from "./middlewares/authMiddleware.js";
 import authRoute from "./routes/authRoutes.js"
 
 const app = express();
@@ -17,7 +16,6 @@ app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(cookieParser());
 app.use("/api/v1/auth", authRoute);
-app.use("/api/v1/protected", verifyJWT);
 
 //import routers
 import candidateRouter from "./routes/candidateRoutes.js";
@@ -29,5 +27,5 @@ app.use("/api/v1/candidate", candidateRouter);
 app.use("/api/v1/professor", professorRouter);
 app.use("/api/v1/exam", examRouter);
 
-// app.use(globalError);
+app.use(globalError);
 export { app };

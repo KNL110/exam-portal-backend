@@ -41,7 +41,7 @@ const examSchema = new mongoose.Schema({
         ref: "professors",
         required: true
     },
-    exmaDate: Date,
+    examDate: Date,
     startTime: Date,
     endTime: Date
 }, { timestamps: true });

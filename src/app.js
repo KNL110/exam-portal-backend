@@ -3,19 +3,21 @@ import cors from "cors";
 import cookieParser from 'cookie-parser';
 import { CORS_ORIGIN } from "./constants.js";
 import { globalError } from "./middlewares/globalerror.js";
+import { verifyJWT } from "./middlewares/authMiddleware.js";
 import authRoute from "./routes/authRoutes.js"
 
 const app = express();
 
 app.use(cors({
-    origin: CORS_ORIGIN,
+    origin: "http://localhost:5173",
     credentials: true
 }));
 
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(cookieParser());
-app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/refresh", authRoute);
+app.use("/api/v1/protected", verifyJWT);
 
 //import routers
 import candidateRouter from "./routes/candidateRoutes.js";

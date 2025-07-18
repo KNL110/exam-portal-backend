@@ -63,7 +63,7 @@ professorSchema.methods.generateRefreshToken = function(){
     return jwt.sign(
         {
             _id: this._id,
-            
+            role: "professor"           
         },
         REFRESH_TOKEN_SECRET,
         {

@@ -20,5 +20,5 @@ import professorRouter from "./routes/professorRoutes.js";
 app.use("/api/v1/candidate", candidateRouter);
 app.use("/api/v1/professor", professorRouter);
 
-app.use(globalError);
+// app.use(globalError);
 export { app };

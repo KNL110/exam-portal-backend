@@ -22,7 +22,7 @@ const candidateSchema = new mongoose.Schema({
         trim: true
     },
     seatingNumber: {   //seating numbers generated 1 day before the exam
-        type: String,
+        type: String,  // to be added
         unique: true,
         trim: true,
         sparse:true

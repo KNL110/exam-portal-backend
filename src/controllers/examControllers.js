@@ -33,11 +33,14 @@ export const createExam = asyncHandler(async (req, res) => {
 
 export const getExams = asyncHandler(async (req, res) => {
 
-    const exams = await Exam.find().populate('questions').select('-createdBy');
-
+    const exams = await Exam.find({createdBy : req.user._id})
+        .populate('questions', 'questionID question questionType options marks correctOption correctValue')
+        .select('-createdBy');
 
     if (exams.length === 0) {
-        throw new ApiError(404, 'No exams found');
+        return res.status(200).json(
+            new ApiResponse(200, [], 'No exams found for this professor')
+        );
     }
 
     return res.status(200).json(
@@ -47,10 +50,11 @@ export const getExams = asyncHandler(async (req, res) => {
 
 
 export const getExam = asyncHandler(async (req, res) => {
+
     const { examID } = req.params;
 
     const exam = await Exam.findOne({ examID })
-        .populate('questions', 'questionID question questionType options marks')
+        .populate('questions', 'questionID question questionType options marks correctOption correctValue')
         .select('-createdBy');
 
     if (!exam) {
@@ -69,7 +73,9 @@ export const getExam = asyncHandler(async (req, res) => {
             question: q.question,
             questionType: q.questionType,
             options: q.options,
-            marks: q.marks
+            marks: q.marks,
+            correctOption: q.correctOption,
+            correctValue: q.correctValue
         }))
     };
 
@@ -79,6 +85,7 @@ export const getExam = asyncHandler(async (req, res) => {
 });
 
 export const startExam = asyncHandler(async (req, res) => {
+
     const startTime = new Date()
     const { examID } = req.params;
 
@@ -94,7 +101,7 @@ export const startExam = asyncHandler(async (req, res) => {
     });
 
     if (existingResponse) {
-        throw new ApiError(400, 'You have already started this exam');
+        throw new ApiError(400, 'You have already attended this exam');
     }
 
     return res.status(200).json(
@@ -106,6 +113,7 @@ export const startExam = asyncHandler(async (req, res) => {
 });
 
 export const submitExam = asyncHandler(async (req, res) => {
+    
     const { examID } = req.params;
     const { answers, startTime } = req.body;
     const endTime = new Date();

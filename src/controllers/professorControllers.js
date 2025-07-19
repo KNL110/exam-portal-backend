@@ -85,6 +85,7 @@ export const login = asyncHandler(async (req, res) => {
 });
 
 export const logoutprofessor = asyncHandler(async (req, res) => {
+
     await Professor.findByIdAndUpdate(
         req.user._id,
         {

@@ -100,6 +100,7 @@ export const login = asyncHandler(async (req, res) => {
 });
 
 export const logoutcandidate = asyncHandler(async (req, res) => {
+
     await Candidate.findByIdAndUpdate(
         req.user._id,
         {
@@ -116,4 +117,36 @@ export const logoutcandidate = asyncHandler(async (req, res) => {
     return res.status(200)
         .clearCookie("refreshToken", options)
         .json(new ApiResponse(200, {}, "candidate logged out"));
+});
+
+export const getStudentById = asyncHandler(async (req, res) => {
+
+    const { studentId } = req.params;
+
+    const student = await Candidate.findById(studentId).select('name rollNumber email');
+
+    if (!student) {
+        throw new ApiError(404, 'Student not found');
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200, student, 'Student fetched successfully')
+    );
+});
+
+export const getMultipleStudents = asyncHandler(async (req, res) => {
+    
+    const { studentIds } = req.body;
+
+    if (!studentIds || !Array.isArray(studentIds) || studentIds.length === 0) {
+        throw new ApiError(400, 'Student IDs array is required');
+    }
+
+    const students = await Candidate.find({
+        _id: { $in: studentIds }
+    }).select('name rollNumber email');
+
+    return res.status(200).json(
+        new ApiResponse(200, students, 'Students fetched successfully')
+    );
 });

@@ -1,3 +1,4 @@
+// MongoDB database connection configuration
 import mongoose from "mongoose";
 import { DB_URI } from "../constants.js";
 

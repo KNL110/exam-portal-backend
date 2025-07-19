@@ -1,3 +1,4 @@
+// Response controllers - handle exam response operations
 import { Response } from "../models/response.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";

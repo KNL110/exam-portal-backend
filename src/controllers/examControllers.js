@@ -189,19 +189,17 @@ export const submitExam = asyncHandler(async (req, res) => {
 });
 
 
-export const sendResultsEmail = async (req, res) => {
+export const sendResultsEmail = asyncHandler(async (req, res) => {
     const { to, subject, html, attachments } = req.body;
 
-    // Configure email transporter (Gmail example)
-    const transporter = nodemailer.createTransporter({
+    const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: process.env.EMAIL_USER, // your Gmail address
-            pass: process.env.EMAIL_PASS  // your Gmail app password
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
         }
     });
 
-    // Send email with PDF attachment
     await transporter.sendMail({
         from: process.env.EMAIL_USER,
         to: to,
@@ -218,5 +216,5 @@ export const sendResultsEmail = async (req, res) => {
     return res.status(200).json(
         new ApiResponse(200, {}, 'Email sent successfully')
     );
-};
+});
 

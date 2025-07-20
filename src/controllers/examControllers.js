@@ -4,6 +4,7 @@ import { Response } from "../models/response.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import nodemailer from 'nodemailer';
 
 export const createExam = asyncHandler(async (req, res) => {
 
@@ -33,7 +34,7 @@ export const createExam = asyncHandler(async (req, res) => {
 
 export const getExams = asyncHandler(async (req, res) => {
 
-    const exams = await Exam.find({createdBy : req.user._id})
+    const exams = await Exam.find({ createdBy: req.user._id })
         .populate('questions', 'questionID question questionType options marks correctOption correctValue')
         .select('-createdBy');
 
@@ -113,7 +114,7 @@ export const startExam = asyncHandler(async (req, res) => {
 });
 
 export const submitExam = asyncHandler(async (req, res) => {
-    
+
     const { examID } = req.params;
     const { answers, startTime } = req.body;
     const endTime = new Date();
@@ -186,4 +187,36 @@ export const submitExam = asyncHandler(async (req, res) => {
         }, 'Exam submitted successfully')
     );
 });
+
+
+export const sendResultsEmail = async (req, res) => {
+    const { to, subject, html, attachments } = req.body;
+
+    // Configure email transporter (Gmail example)
+    const transporter = nodemailer.createTransporter({
+        service: 'gmail',
+        auth: {
+            user: process.env.EMAIL_USER, // your Gmail address
+            pass: process.env.EMAIL_PASS  // your Gmail app password
+        }
+    });
+
+    // Send email with PDF attachment
+    await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: to,
+        subject: subject,
+        html: html,
+        attachments: attachments.map(att => ({
+            filename: att.filename,
+            content: att.content,
+            encoding: att.encoding,
+            contentType: att.contentType
+        }))
+    });
+
+    return res.status(200).json(
+        new ApiResponse(200, {}, 'Email sent successfully')
+    );
+};
 

@@ -25,6 +25,7 @@ import authRoute from "./routes/authRoutes.js"
 app.use("/api/v1/candidate", candidateRouter);
 app.use("/api/v1/professor", professorRouter);
 app.use("/api/v1/exam", examRouter);
+app.use("/api/v1/email", examRouter);
 app.use("/api/v1/auth", authRoute);
 
 app.use(globalError);

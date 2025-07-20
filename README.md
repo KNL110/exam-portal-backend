@@ -1,4 +1,4 @@
-# Goa Testing Agency - Backend
+# exam-portal - Backend
 
 A Node.js/Express.js backend for the Goa Testing Agency examination portal, providing secure authentication, exam management, and response handling.
 
@@ -79,44 +79,6 @@ The server will start on `http://localhost:3000` (or the port specified in your 
 npm start
 ```
 
-## 📁 Project Structure
-
-```
-backend/
-├── src/
-│   ├── controllers/          # Route controllers
-│   │   ├── candidateControllers.js
-│   │   ├── examControllers.js
-│   │   ├── professorControllers.js
-│   │   └── responseControllers.js
-│   ├── database/             # Database configuration
-│   │   └── db.js
-│   ├── middlewares/          # Express middlewares
-│   │   ├── authMiddleware.js
-│   │   └── globalerror.js
-│   ├── models/               # Mongoose models
-│   │   ├── exam.js
-│   │   ├── professor.js
-│   │   ├── question.js
-│   │   ├── response.js
-│   │   └── student.js
-│   ├── routes/               # API routes
-│   │   ├── authRoutes.js
-│   │   ├── candidateRoutes.js
-│   │   ├── examRoutes.js
-│   │   └── professorRoutes.js
-│   ├── utils/                # Utility functions
-│   │   ├── ApiError.js
-│   │   ├── ApiResponse.js
-│   │   └── asyncHandler.js
-│   ├── app.js                # Express app configuration
-│   ├── constants.js          # Environment constants
-│   └── index.js              # Server entry point
-├── package.json
-├── package-lock.json
-└── README.md
-```
-
 ## 🔗 API Endpoints
 
 ### Professor Routes
@@ -126,7 +88,6 @@ backend/
 
 ### Candidate Routes  
 
-- `GET /api/v1/candidate/register` - candidate register
 - `GET /api/v1/candidate/login` - candidate login
 - `GET /api/v1/candidate/getStudent/:id` - Get student by ID
 - `POST /api/v1/candidate/logout` - Candidate logout
@@ -151,67 +112,13 @@ The API uses JWT (JSON Web Tokens) for authentication:
 2. **Protected Routes**: Include `Authorization: Bearer <token>` in headers
 3. **Role-based Access**: Routes are protected based on user roles (professor/candidate)
 
-### Example Request
+## 📊 Database Models
 
-```javascript
-fetch('http://localhost:3000/api/v1/exam/getExam', {
-  method: 'GET',
-  headers: {
-    'Authorization': 'Bearer your_jwt_token_here',
-    'Content-Type': 'application/json'
-  }
-})
-```
-
-## 📊 Database Schema
-
-### Professor Model
-
-- `name`: String (required)
-- `email`: String (required, unique)
-- `password`: String (required, hashed)
-- `department`: String
-- `timestamps`: Created/Updated dates
-
-### Student Model
-
-- `name`: String (required)
-- `email`: String (required, unique)
-- `rollNumber`: String (required, unique)
-- `password`: String (required, hashed)
-- `timestamps`: Created/Updated dates
-
-### Exam Model
-
-- `examID`: String (required, unique)
-- `examName`: String (required)
-- `durationMinutes`: Number (required)
-- `markingScheme`: Object (correct, incorrect, unattempted marks)
-- `questions`: Array of ObjectIds (references Question model)
-- `createdBy`: ObjectId (references Professor model)
-- `timestamps`: Created/Updated dates
-
-### Question Model
-
-- `questionID`: String (required, unique)
-- `question`: String (required)
-- `questionType`: String (MCQ/NAT)
-- `options`: Array of Strings (for MCQ)
-- `correctOption`: Number (for MCQ)
-- `correctValue`: Number (for NAT)
-- `marks`: Number (required)
-- `timestamps`: Created/Updated dates
-
-### Response Model
-
-- `examID`: ObjectId (references Exam model)
-- `studentID`: ObjectId (references Student model)
-- `answers`: Array of answer objects
-- `score`: Number
-- `startTime`: Date
-- `endTime`: Date
-- `timeTaken`: Number (in seconds)
-- `timestamps`: Created/Updated dates
+- **Professor Modeles**
+- **Student Model**
+- **Exam Model**
+- **Question Model**
+- **Response Model**
 
 ## 🐛 Error Handling
 
@@ -259,31 +166,6 @@ MongoDB connection is configured in `src/database/db.js` with automatic reconnec
 
 All sensitive configuration is stored in environment variables for security.
 
-## 🚀 Deployment
-
-### Production Considerations
-
-1. **Environment Variables**: Set all required environment variables
-2. **Database**: Use MongoDB Atlas or similar cloud database
-3. **Security**: Use strong JWT secrets and HTTPS
-4. **Process Management**: Use PM2 or similar for process management
-5. **Reverse Proxy**: Use Nginx for reverse proxy and static file serving
-
-### Docker Deployment (Optional)
-
-Create a `Dockerfile`:
-
-```dockerfile
-
-FROM node:16-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-EXPOSE 3000
-CMD ["npm", "start"]
-```
-
 ## 🤝 Contributing
 
 1. Fork the repository
@@ -298,7 +180,7 @@ CMD ["npm", "start"]
 
 ## 🔗 Related Projects
 
-- Frontend Repository: [Link to frontend repo]
+- Frontend Repository: <https://github.com/KNL110/exam-portal-frontend.git>
 
 ---
 

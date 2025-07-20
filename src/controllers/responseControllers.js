@@ -82,7 +82,7 @@ export const getOneResponse = asyncHandler(async (req, res) => {
     if (!response || response.length === 0) {
         throw new ApiError(404, 'No exam responses found');
     }
-
+    
     return res.status(200).json(
         new ApiResponse(200, response, 'Exam responses fetched successfully')
     );

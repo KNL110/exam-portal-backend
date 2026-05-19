@@ -2,7 +2,7 @@
 
 A Node.js/Express.js backend for the Goa Testing Agency examination portal, providing secure authentication, exam management, and response handling.
 
-## 🚀 Features
+##  Features
 
 - **User Authentication**: JWT-based authentication for professors and candidates
 - **Exam Management**: Create, update, and manage exams with MCQ and numerical answer types
@@ -11,7 +11,7 @@ A Node.js/Express.js backend for the Goa Testing Agency examination portal, prov
 - **Secure API**: Protected routes with middleware authentication
 - **Database Integration**: MongoDB with Mongoose ODM
 
-## 📋 Prerequisites
+##  Prerequisites
 
 Before running this application, make sure you have the following installed:
 
@@ -19,7 +19,7 @@ Before running this application, make sure you have the following installed:
 - **MongoDB** (v4.4 or higher)
 - **npm** package manager
 
-## 🛠️ Installation
+##  Installation
 
 1. **Clone the repository**
 
@@ -63,7 +63,7 @@ Before running this application, make sure you have the following installed:
    net start MongoDB
    ```
 
-## 🚀 Running the Application
+##  Running the Application
 
 ### Development Mode
 
@@ -79,7 +79,7 @@ The server will start on `http://localhost:3000` (or the port specified in your 
 npm start
 ```
 
-## 🔗 API Endpoints
+##  API Endpoints
 
 ### Professor Routes
 
@@ -104,7 +104,7 @@ Only logged in professor and student access these protected routes
 - `GET /api/v1/exam/getExam/:examID` - Get specific exam details
 - `GET /api/v1/exam/examResult` - Get exam results
 
-## 🔐 Authentication
+##  Authentication
 
 The API uses JWT (JSON Web Tokens) for authentication:
 
@@ -112,7 +112,7 @@ The API uses JWT (JSON Web Tokens) for authentication:
 2. **Protected Routes**: Include `Authorization: Bearer <token>` in headers
 3. **Role-based Access**: Routes are protected based on user roles (professor/candidate)
 
-## 📊 Database Models
+##  Database Models
 
 - **Professor Modeles**
 - **Student Model**
@@ -120,7 +120,7 @@ The API uses JWT (JSON Web Tokens) for authentication:
 - **Question Model**
 - **Response Model**
 
-## 🐛 Error Handling
+##  Error Handling
 
 The API uses a centralized error handling system:
 
@@ -139,20 +139,20 @@ The API uses a centralized error handling system:
 }
 ```
 
-## 🧪 Testing
+##  Testing
 
 ### Manual Testing
 
 Use tools like Postman or curl to test the API endpoints.
 
-## 📈 Performance Considerations
+##  Performance Considerations
 
 - **Database Indexing**: Unique indexes on email, examID, questionID
 - **Password Hashing**: Using bcrypt for secure password storage
 - **JWT Tokens**: Short-lived access tokens for security
 - **Mongoose Pagination**: Built-in pagination support for large datasets
 
-## 🔧 Configuration
+##  Configuration
 
 ### CORS Configuration
 
@@ -166,7 +166,7 @@ MongoDB connection is configured in `src/database/db.js` with automatic reconnec
 
 All sensitive configuration is stored in environment variables for security.
 
-## 🤝 Contributing
+##  Contributing
 
 1. Fork the repository
 2. Create a branch
@@ -174,11 +174,11 @@ All sensitive configuration is stored in environment variables for security.
 4. Add tests if applicable
 5. Submit a pull request
 
-## 👤 Author
+##  Author
 
 ### Krunal Asari
 
-## 🔗 Related Projects
+##  Related Projects
 
 - Frontend Repository: <https://github.com/KNL110/exam-portal-frontend.git>
 

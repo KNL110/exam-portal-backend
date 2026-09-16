@@ -6,7 +6,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/knl110/examPortal/internal/config"
+	"github.com/knl110/examPortal/goBackend/internal/config"
 )
 
 func main(){

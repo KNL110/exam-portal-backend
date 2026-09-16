@@ -1,4 +1,4 @@
-module github.com/knl110/examPortal
+module github.com/knl110/examPortal/goBackend
 
 go 1.27.1
 

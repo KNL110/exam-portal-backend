@@ -23,6 +23,20 @@ type Config struct {
 	HttpServer HttpServer `yaml:"httpServer"`
 }
 
+func (cfg *Config) checkEnv(){
+	if(cfg.Env=="dev" && cfg.HttpServer.Addr=="localhost"){
+		log.Println("develepoment Environment")
+	}else if(cfg.Env=="prod"){
+		if(cfg.HttpServer.Addr != "0.0.0.0"){
+			cfg.HttpServer.Addr = "0.0.0.0"
+			log.Printf("setting address to %s",cfg.HttpServer.Addr)
+		}
+		log.Println("Production Environment")
+	}else{
+		log.Fatalf("invalid Env value %s",cfg.Env)
+	}
+}
+
 func MustLoad() *Config {
 	var configPath string
 
@@ -48,6 +62,8 @@ func MustLoad() *Config {
 	if err != nil {
 		log.Fatalf("failed to load config: %v", err)
 	}
+
+	config.checkEnv()
 
 	return &config
 }

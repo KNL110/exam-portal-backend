@@ -1,7 +1,9 @@
 package main
 
 import (
+	"errors"
 	"log"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -21,12 +23,15 @@ func main(){
 
 	go func ()  {
 		err := app.run()
-		if err != nil {
+		if err != nil && !errors.Is(err, http.ErrServerClosed) {
 			panic(err)
 		}
 	}()
-	log.Println("server started!")
+	log.Printf("server started! at %s", config.HttpServer.GetAddr())
 
 	<-done
-	log.Println("closing server")
+
+	if err := app.close(); err != nil {
+		log.Fatalf("main: error closing server -> %s",err)
+	}
 }

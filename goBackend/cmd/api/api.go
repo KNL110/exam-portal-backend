@@ -1,6 +1,9 @@
 package main
 
 import (
+	"context"
+	"fmt"
+	"log"
 	"net/http"
 	"time"
 
@@ -9,6 +12,7 @@ import (
 
 type application struct {
 	config config.Config
+	server *http.Server
 }
 
 // func newApplication(config config.Config) *application {
@@ -30,13 +34,29 @@ func (app *application) mount() *http.ServeMux {
 func (app *application) run() error {
 	router := app.mount()
 	
-	server := &http.Server{
+	app.server = &http.Server{
 		Addr: app.config.HttpServer.GetAddr(),
 		Handler: router,
 		WriteTimeout: time.Second*30,
 		ReadTimeout: time.Second*10,
 		IdleTimeout: time.Minute,
 	}
+	
 
-	return server.ListenAndServe()
+	return app.server.ListenAndServe()
+}
+
+func (app *application) close() error{
+
+	log.Println("closing server...")
+	ctx, cancel := context.WithTimeout(context.Background(),time.Second*5)
+	defer cancel()
+
+	err := app.server.Shutdown(ctx)
+	if err != nil {
+		return fmt.Errorf("app.close: failed to close server -> %w",err)
+	}
+
+	log.Println("server closed successfully")
+	return nil
 }

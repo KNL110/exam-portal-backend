@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/knl110/examPortal/goBackend/internal/config"
+	"github.com/knl110/examPortal/goBackend/internal/health"
 )
 
 type application struct {
@@ -24,9 +25,7 @@ type application struct {
 func (app *application) mount() *http.ServeMux {
 	router := http.NewServeMux()
 
-	router.HandleFunc("GET /api/v1/health", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("health ok"))
-	})
+	router.Handle("GET /api/v1/health", health.HealthRouter())
 
 	return router
 }

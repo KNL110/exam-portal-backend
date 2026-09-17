@@ -12,9 +12,9 @@ import (
 func main(){
 	//load config
 	config := config.MustLoad()
-	var app *application
-
-	app = app.newApplication(*config)
+	app := application{
+		config: *config,
+	}
 
 	done := make(chan os.Signal,1)
 	signal.Notify(done,os.Interrupt,syscall.SIGINT, syscall.SIGTERM)

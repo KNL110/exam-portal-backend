@@ -13,19 +13,19 @@ type HttpServer struct {
 	Port string `yaml:"port" env:"PORT" env-default:"8080"`
 }
 
+type Config struct {
+	Env string `yaml:"env" env-required:"true"`
+	DBPath string `yaml:"dbPath" env:"DB_PATH" env-required:"true"`
+	HttpServer HttpServer `yaml:"httpServer"`
+}
+
 func (srv *HttpServer) GetAddr() string {
 	return srv.Addr+":"+srv.Port
 }
 
-type Config struct {
-	Env string `yaml:"env" env-required:"true"`
-	DBPath string `yaml:"dbPath" env-required:"true"`
-	HttpServer HttpServer `yaml:"httpServer"`
-}
-
 func (cfg *Config) checkEnv(){
 	if(cfg.Env=="dev" && cfg.HttpServer.Addr=="localhost"){
-		log.Println("develepoment Environment")
+		log.Printf("develepoment Environment, addr: %s",cfg.HttpServer.GetAddr())
 	}else if(cfg.Env=="prod"){
 		if(cfg.HttpServer.Addr != "0.0.0.0"){
 			cfg.HttpServer.Addr = "0.0.0.0"
@@ -33,7 +33,7 @@ func (cfg *Config) checkEnv(){
 		}
 		log.Println("Production Environment")
 	}else{
-		log.Fatalf("invalid Env value %s",cfg.Env)
+		log.Fatalf("invalid Env value: %s",cfg.Env)
 	}
 }
 

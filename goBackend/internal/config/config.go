@@ -9,8 +9,8 @@ import (
 )
 
 type HttpServer struct {
-	Addr string `yaml:"address" envDefault:"localhost:8080"`
-	Port string `yaml:"port" envDefault:"8080"`
+	Addr string `yaml:"address" env:"HOST" env-default:"0.0.0.0"`
+	Port string `yaml:"port" env:"PORT" env-default:"8080"`
 }
 
 func (srv *HttpServer) GetAddr() string {

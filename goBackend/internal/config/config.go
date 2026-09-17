@@ -10,7 +10,11 @@ import (
 
 type HttpServer struct {
 	Addr string `yaml:"address" envDefault:"localhost:8080"`
-	Port int `yaml:"port" envDefault:"8080"`
+	Port string `yaml:"port" envDefault:"8080"`
+}
+
+func (srv *HttpServer) GetAddr() string {
+	return srv.Addr+":"+srv.Port
 }
 
 type Config struct {

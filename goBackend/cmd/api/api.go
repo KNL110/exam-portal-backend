@@ -11,17 +11,27 @@ type application struct {
 	config config.Config
 }
 
-func (app *application) newApplication(config config.Config) *application {
-	return &application{
-		config: config,
-	}
+// func newApplication(config config.Config) *application {
+// 	return &application{
+// 		config: config,
+// 	}
+// }
+
+func (app *application) mount() *http.ServeMux {
+	router := http.NewServeMux()
+
+	router.HandleFunc("GET /api/v1/health", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("health ok"))
+	})
+
+	return router
 }
 
 func (app *application) run() error {
-	router := http.NewServeMux()
-
+	router := app.mount()
+	
 	server := &http.Server{
-		Addr:    app.config.HttpServer.Addr,
+		Addr: app.config.HttpServer.GetAddr(),
 		Handler: router,
 		WriteTimeout: time.Second*30,
 		ReadTimeout: time.Second*10,
